@@ -84,4 +84,30 @@ devices. For example, the computer plays any WAV file that you send to
 quency mismatches. Furthermore, on most systems, the device is often busy
 as soon as you log in.</p>
 
+<br>
+
+<b>C++ and Linux kernel</b>
+<p>Linux kernel developers see C++ as a combination of worst aspects of C and higher-level languages.</p>
+<p>But, sometimes, C++ support is needed.</p>
+<p>The most obvious one is that some developers might actually want to write programs in C++ that need 
+  access to the kernel's API; there is no accounting for taste, after all. 
+  For most system calls, the details of the real kernel API (as opposed to the POSIX-like API exposed by the C library) 
+  tend to be hidden, but there are exceptions; the most widespread of those is almost certainly the ioctl() system call. 
+  There is a large set of structures used with ioctl(); their definition is a big part of the kernel's UAPI. 
+  If a C++ compiler cannot compile those UAPI definitions, then those ioctl() calls cannot be invoked from C++.</p>
+
+<br>
+
+<b>Verifying Linux kernel patches with AI</b>
+<p>Use machine learning to distinguish patches that fix bugs from others.</p>
+<p>When a developer fixes a bug in a patch they can add a "stable tag" to the commit or send a mail 
+  to the stable mailing list; Greg Kroah-Hartman will then pick up the fix, evaluate it, and add it 
+  to the stable tree. But that means that the stable tree is only getting the fixes that are pointed 
+  out to the stable maintainers.</p>
+<p>Patch authors are unsure whether something can be marked as stable.</p>
+<p>Different subsystems have different rules for submitting stable patches.</p>
+<p>To automate things, you need to figure out what makes a patch stable/bug fix.</p>
+<p>[...] He then trained the neural network with commits from Linux 3.0 to 4.16, where the "true" value was whether the commit was in the stable tree.</p>
+<p>The resulting neural network is called PatchNet.</p>
+
 
