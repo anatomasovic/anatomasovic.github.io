@@ -1,9 +1,5 @@
 <h1>14.9.2018</h1>
 
-p,b,ul,li {
-    font-family: "Times New Roman", Times, serif;
-}
-
 <b>Oracle Linux</b>
 <ul>
   <li>built from source packages for RHEL</li>
@@ -67,4 +63,25 @@ Sep 15 	Black riders enter the Shire
 Sep 15 	ACM founded, 1947
 </pre>
 
-  
+<br>
+
+<b>chvt command</b>
+
+<p>Switches consoles in Linux.</p>
+
+<br>
+
+<b>Linux audio - ALSA and OSS</b>
+
+<p>Linux has two sets of audio devices. There are separate devices for the
+Advanced Linux Sound Architecture (ALSA) system interface and the older
+Open Sound System (OSS). The ALSA devices are in the /dev/snd directory,
+but it’s difficult to work with them directly. Linux systems that use ALSA
+support OSS backward-compatible devices if the OSS kernel support is currently loaded.
+Some rudimentary operations are possible with the OSS dsp and audio
+devices. For example, the computer plays any WAV file that you send to
+/dev/dsp. However, the hardware may not do what you expect due to fre-
+quency mismatches. Furthermore, on most systems, the device is often busy
+as soon as you log in.</p>
+
+
