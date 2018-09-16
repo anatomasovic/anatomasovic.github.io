@@ -1,0 +1,71 @@
+<h1>16.9.2018</h1>
+
+<b>Containers, zones, jails, VMs</b>
+<a href="https://blog.jessfraz.com/post/containers-zones-jails-vms/">Original</a>
+
+<p>A “container” is just a term people use to describe a combination of Linux namespaces and cgroups.
+Containers were not a top level design, they are something we build from Linux primitives. 
+Zones, Jails, and VMs are designed as top level isolation.
+Jails, Zones, VMs and containers were designed and built in different ways. Containers are not a 
+Linux isolation primitive, they merely consume Linux primitives which allow for some interesting interactions.</p>
+
+<br>
+
+<b>Throttle tha bandiwdth on a Linux interface</b>
+<a href="https://mark.koli.ch/slowdown-throttle-bandwidth-linux-network-interface">Original</a>
+
+<p>
+In complex service oriented application stacks, some bugs only manifest themselves on congested or slow networking interfaces. 
+Most Linux distros ship with the tc command which is used to configure Traffic Control in the Linux kernel.
+
+Add 500ms latency to all network traffic:
+<pre>
+sudo tc qdisc add dev eth0 root netem delay 500ms
+</pre>
+
+The connection may start slow — as shaped by our tc delay tweak — but once things are 
+started TCP will ramp up and eventually hit full speed again.
+
+To permanently throttle an interface:
+
+<pre>
+sudo tc qdisc add dev eth0 handle 1: root htb default 11
+sudo tc class add dev eth0 parent 1: classid 1:1 htb rate 1kbps
+sudo tc class add dev eth0 parent 1:1 classid 1:11 htb rate 1kbps
+</pre>
+
+Finally, rules can be cleared with: <pre>sudo tc qdisc del dev eth0 root</pre>
+</p>
+
+<br>
+
+<b>Site Reliability Engineering (SRE) at Google</b>
+
+<p>
+In general, an SRE team is responsible for availability, 
+latency, performance, efficiency, change management, monitoring, emergency response, and capacity planning.
+
+To SRE, software engineers are people who know enough about programming languages, data structures and algorithms, 
+and performance to be able to write software that is effective.
+
+Typically, we hire about a 50-50 mix of people who have more of a 
+software background and people who have more of a systems background.
+
+We care deeply about keeping SRE an engineering function, 
+so our rule of thumb is that an SRE team must spend at least 50% of its time doing development.
+</p>
+
+<br>
+
+<b>Firewall: nftables</b>
+<a href="http://ral-arturo.org/2017/05/05/debian-stretch-stable-nftables.html">Original</a>
+
+<p>
+Released by the Netfilter project.
+nftables is meant to replace iptables (also ip6tables, arptables and ebtables).
+It comes with a new command line utility nft whose syntax is different to iptables.
+It also comes with a compatibility layer that allows you to run iptables commands over the new nftables kernel framework.
+It provides generic set infrastructure that allows you to construct maps and concatenation. 
+You can use this new feature to arrange your ruleset in multidimensional tree which drastically 
+reduces the number of rules that need to be inspected until you find the final action on the packet.
+</b>
