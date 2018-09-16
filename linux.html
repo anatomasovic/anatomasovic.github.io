@@ -1,0 +1,159 @@
+<b>Oracle Linux</b>
+<ul>
+  <li>built from source packages for RHEL</li>
+  <li>custom-built and rigorously-tested Linux kernel called "Oracle Unbreakable Kernel"</li>
+  <li>"zero downtime patching" - a feature that enables administrators to update the kernel without a reboot</li>
+</ul>
+
+<br>
+
+<b>Calendar tool</b>
+
+<pre>
+[ 0 20:33:06 ana ~ ] $  calendar 
+Sep 14 	Frodo & Bilbo's birthday
+Sep 15 	Black riders enter the Shire
+Sep 15 	ACM founded, 1947
+</pre>
+
+<br>
+
+<b>Linux audio - ALSA and OSS</b>
+
+<p>Linux has two sets of audio devices. There are separate devices for the
+Advanced Linux Sound Architecture (ALSA) system interface and the older
+Open Sound System (OSS). The ALSA devices are in the /dev/snd directory,
+but it’s difficult to work with them directly. Linux systems that use ALSA
+support OSS backward-compatible devices if the OSS kernel support is currently loaded.
+Some rudimentary operations are possible with the OSS dsp and audio
+devices. For example, the computer plays any WAV file that you send to
+/dev/dsp. However, the hardware may not do what you expect due to fre-
+quency mismatches. Furthermore, on most systems, the device is often busy
+as soon as you log in.</p>
+
+<br>
+
+<b>C++ and Linux kernel</b>
+<p>Linux kernel developers see C++ as a combination of worst aspects of C and higher-level languages.</p>
+<p>But, sometimes, C++ support is needed.</p>
+<p>The most obvious one is that some developers might actually want to write programs in C++ that need 
+  access to the kernel's API; there is no accounting for taste, after all. 
+  For most system calls, the details of the real kernel API (as opposed to the POSIX-like API exposed by the C library) 
+  tend to be hidden, but there are exceptions; the most widespread of those is almost certainly the ioctl() system call. 
+  There is a large set of structures used with ioctl(); their definition is a big part of the kernel's UAPI. 
+  If a C++ compiler cannot compile those UAPI definitions, then those ioctl() calls cannot be invoked from C++.</p>
+
+<br>
+
+<b>Verifying Linux kernel patches with AI</b>
+<p>Use machine learning to distinguish patches that fix bugs from others.</p>
+<p>When a developer fixes a bug in a patch they can add a "stable tag" to the commit or send a mail 
+  to the stable mailing list; Greg Kroah-Hartman will then pick up the fix, evaluate it, and add it 
+  to the stable tree. But that means that the stable tree is only getting the fixes that are pointed 
+  out to the stable maintainers.</p>
+<p>Patch authors are unsure whether something can be marked as stable.</p>
+<p>Different subsystems have different rules for submitting stable patches.</p>
+<p>To automate things, you need to figure out what makes a patch stable/bug fix.</p>
+<p>[...] He then trained the neural network with commits from Linux 3.0 to 4.16, where the "true" value was whether the commit was in the stable tree.</p>
+<p>The resulting neural network is called PatchNet.</p>
+
+<br>
+
+<b>Containers, zones, jails, VMs</b>
+<a href="https://blog.jessfraz.com/post/containers-zones-jails-vms/">Original</a>
+
+<p>A “container” is just a term people use to describe a combination of Linux namespaces and cgroups.
+Containers were not a top level design, they are something we build from Linux primitives. 
+Zones, Jails, and VMs are designed as top level isolation.
+Jails, Zones, VMs and containers were designed and built in different ways. Containers are not a 
+Linux isolation primitive, they merely consume Linux primitives which allow for some interesting interactions.</p>
+
+<br>
+
+<b>Throttle the bandiwdth on a Linux interface</b>
+<a href="https://mark.koli.ch/slowdown-throttle-bandwidth-linux-network-interface">Original</a>
+
+<p>
+In complex service oriented application stacks, some bugs only manifest themselves on congested or slow networking interfaces. 
+Most Linux distros ship with the tc command which is used to configure Traffic Control in the Linux kernel.
+
+Add 500ms latency to all network traffic:
+<pre>
+sudo tc qdisc add dev eth0 root netem delay 500ms
+</pre>
+
+The connection may start slow — as shaped by our tc delay tweak — but once things are 
+started TCP will ramp up and eventually hit full speed again.
+
+To permanently throttle an interface:
+
+<pre>
+sudo tc qdisc add dev eth0 handle 1: root htb default 11
+sudo tc class add dev eth0 parent 1: classid 1:1 htb rate 1kbps
+sudo tc class add dev eth0 parent 1:1 classid 1:11 htb rate 1kbps
+</pre>
+
+Finally, rules can be cleared with: <pre>sudo tc qdisc del dev eth0 root</pre>
+</p>
+
+<br>
+
+<b>Firewall: nftables</b>
+<a href="http://ral-arturo.org/2017/05/05/debian-stretch-stable-nftables.html">Original</a>
+
+<p>
+Released by the Netfilter project.
+nftables is meant to replace iptables (also ip6tables, arptables and ebtables).
+It comes with a new command line utility nft whose syntax is different to iptables.
+It also comes with a compatibility layer that allows you to run iptables commands over the new nftables kernel framework.
+It provides generic set infrastructure that allows you to construct maps and concatenation. 
+You can use this new feature to arrange your ruleset in multidimensional tree which drastically 
+reduces the number of rules that need to be inspected until you find the final action on the packet.
+</p>
+
+<br>
+
+<b>Linux utilities you might not know</b>
+<a href="http://shiroyasha.io/coreutils-that-you-might-not-know.html">Original</a>
+<a href="https://www.lopezferrando.com/30-interesting-shell-commands/">Original 2</a>
+
+<ul>
+    <li>column command - print as table in terminal</li>
+    <li>shred command - alternative to rm</li>
+    <li>sudo fuser -k 8000/tcp (kill program using one port)</li>
+    <li>ls | nl (prepend line number)</li>
+    <li>grep -P "\t" (grep with Perl syntax)</li>
+    <li>inotifywait (do something when file changes)</li>
+    <li>xclip (copy to clipboard)</li>
+    <li>nohup ./script.sh & (leave program running after closing SSH session)</li>
+    <li>comm (combine lines from two files)</li>
+    <li>sudo swapoff -a (flush swap partition)</li>
+    <li>fallocate -l 1G test.img (create empty file of given size)</li>
+</ul>
+
+<br>
+
+<b>Why does man print "gimme gimme gimme" at 00:30?</b>
+<a href="https://unix.stackexchange.com/questions/405783/why-does-man-print-gimme-gimme-gimme-at-0030">Original</a>
+<p>Pretty much the whole story is in the commit. The maintainer of man is a good friend of mine, 
+    and one day six years ago I jokingly said to him that if you invoke man after midnight it 
+    should print "gimme gimme gimme", because of the Abba song called "Gimme gimme gimme a man after midnight"</p>
+    <p>Running man with -w will not do this.</p>
+
+<br>
+
+<b>10 things I wish I had known about bash</b>
+<a href="https://zwischenzugs.com/2018/01/06/ten-things-i-wish-id-known-about-bash/">Original</a>
+
+<ul>
+    <li>¸¸ == $() - second format is easier to nest</li>
+    <li>$? is a special bash variable that’s set to the exit code of each command after it runs</li>
+</ul>
+
+<br>
+
+<b>Where did 'wheel' group get its name?</b>
+<p>wheel: n. [from slang ‘big wheel’ for a powerful person] A person who has an active wheel bit...
+    The traditional name of security group zero in BSD (to which the major system-internal users like root belong) is ‘wheel’...</p>
+
+<br>
