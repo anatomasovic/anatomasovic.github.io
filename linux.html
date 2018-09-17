@@ -157,3 +157,38 @@ reduces the number of rules that need to be inspected until you find the final a
     The traditional name of security group zero in BSD (to which the major system-internal users like root belong) is ‘wheel’...</p>
 
 <br>
+
+<b>Monitor kernel's processing of devices in real-time</b>
+<pre>
+[ 1 18:52:09 ana ~ ] $  sudo udevadm monitor --kernel
+monitor will print the received events for:
+KERNEL - the kernel uevent
+
+KERNEL[20195.643246] remove   /devices/pci0000:00/0000:00:1d.0/usb1/1-1/1-1.4/1-1.4:1.0 (usb)
+KERNEL[20195.643578] remove   /devices/pci0000:00/0000:00:1d.0/usb1/1-1/1-1.4/1-1.4:1.1/host6/target6:0:0/6:0:0:0/bsg/6:0:0:0 (bsg)
+KERNEL[20195.643875] remove   /devices/pci0000:00/0000:00:1d.0/usb1/1-1/1-1.4/1-1.4:1.1/host6/target6:0:0/6:0:0:0/scsi_generic/sg2 (scsi_generic)
+KERNEL[20195.643910] remove   /devices/pci0000:00/0000:00:1d.0/usb1/1-1/1-1.4/1-1.4:1.1/host6/target6:0:0/6:0:0:0/scsi_device/6:0:0:0 (scsi_device)
+KERNEL[20195.646058] remove   /devices/pci0000:00/0000:00:1d.0/usb1/1-1/1-1.4/1-1.4:1.1/host6/target6:0:0/6:0:0:0/block/sr1 (block)
+KERNEL[20195.646103] remove   /devices/pci0000:00/0000:00:1d.0/usb1/1-1/1-1.4/1-1.4:1.1/host6/target6:0:0/6:0:0:0 (scsi)
+KERNEL[20195.664221] remove   /devices/virtual/bdi/11:1 (bdi)
+KERNEL[20195.664290] remove   /devices/pci0000:00/0000:00:1d.0/usb1/1-1/1-1.4/1-1.4:1.1/host6/target6:0:0 (scsi)
+KERNEL[20195.684190] remove   /devices/pci0000:00/0000:00:1d.0/usb1/1-1/1-1.4/1-1.4:1.1/host6/scsi_host/host6 (scsi_host)
+KERNEL[20195.684258] remove   /devices/pci0000:00/0000:00:1d.0/usb1/1-1/1-1.4/1-1.4:1.1/host6 (scsi)
+KERNEL[20195.684402] remove   /devices/pci0000:00/0000:00:1d.0/usb1/1-1/1-1.4/1-1.4:1.1 (usb)
+KERNEL[20195.684603] remove   /devices/pci0000:00/0000:00:1d.0/usb1/1-1/1-1.4 (usb)
+KERNEL[20203.870151] add      /devices/pci0000:00/0000:00:1d.0/usb1/1-1/1-1.3 (usb)
+KERNEL[20203.870995] add      /devices/pci0000:00/0000:00:1d.0/usb1/1-1/1-1.3/1-1.3:1.0 (usb)
+KERNEL[20203.871389] add      /devices/pci0000:00/0000:00:1d.0/usb1/1-1/1-1.3/1-1.3:1.1 (usb)
+KERNEL[20203.872923] add      /devices/pci0000:00/0000:00:1d.0/usb1/1-1/1-1.3/1-1.3:1.1/host7 (scsi)
+KERNEL[20203.873279] add      /devices/pci0000:00/0000:00:1d.0/usb1/1-1/1-1.3/1-1.3:1.1/host7/scsi_host/host7 (scsi_host)
+KERNEL[20204.873108] add      /devices/pci0000:00/0000:00:1d.0/usb1/1-1/1-1.3/1-1.3:1.1/host7/target7:0:0 (scsi)
+KERNEL[20204.873416] add      /devices/pci0000:00/0000:00:1d.0/usb1/1-1/1-1.3/1-1.3:1.1/host7/target7:0:0/7:0:0:0 (scsi)
+KERNEL[20204.877640] add      /devices/virtual/bdi/11:1 (bdi)
+KERNEL[20204.879213] add      /devices/pci0000:00/0000:00:1d.0/usb1/1-1/1-1.3/1-1.3:1.1/host7/target7:0:0/7:0:0:0/block/sr1 (block)
+KERNEL[20204.879248] add      /devices/pci0000:00/0000:00:1d.0/usb1/1-1/1-1.3/1-1.3:1.1/host7/target7:0:0/7:0:0:0/scsi_device/7:0:0:0 (scsi_device)
+KERNEL[20204.879287] add      /devices/pci0000:00/0000:00:1d.0/usb1/1-1/1-1.3/1-1.3:1.1/host7/target7:0:0/7:0:0:0/scsi_generic/sg2 (scsi_generic)
+KERNEL[20204.879326] add      /devices/pci0000:00/0000:00:1d.0/usb1/1-1/1-1.3/1-1.3:1.1/host7/target7:0:0/7:0:0:0/bsg/7:0:0:0 (bsg)
+KERNEL[20204.879387] change   /devices/pci0000:00/0000:00:1d.0/usb1/1-1/1-1.3/1-1.3:1.1/host7/target7:0:0/7:0:0:0/block/sr1 (block)
+</pre>
+
+<br>
