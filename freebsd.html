@@ -1,1 +1,34 @@
+<b>FreeBSD - a lesson in poor defaults</b>
+<a href="https://vez.mrsk.me/freebsd-defaults.txt">Original</b>
+<em>Mailer daemon</em>
+Sendmail included by default.If you actually run a mail server, there are better options like Postfix or
+OpenSMTPD. If you only need to send mail through a third party provider like
+Gmail, ssmtp is a another lightweight alternative.
+<br>
+<em>Firewall</em>
+Three included by default: IPFW (native), PF (ported from OpenBSD), and IPFilter
+The version of PF included with FreeBSD hasn't
+been synced with upstream since 2009.
+<br>
+<em>NTP</em>
+A lot of FreeBSD security advisories have been related to the NTP daemon
+included in the base system, known as the "reference implementation."
+It's really shitty code, written mainly by time geeks and scientists instead
+of people who actually run network-facing services.
+<em>Periodic</em>
+Many useless things, some even potentially a security risk, will be running
+in the background by default. A lot of them are poorly documented or maybe
+not documented at all.
+I'll only suggest disabling one in particular...
 
+###############################################################################
+daily_status_security_pkgaudit_enable="NO"
+###############################################################################
+
+I most certainly don't want pkg (running as root, remember) going out to
+the internet every night to fetch a list of vulnerable ports.
+
+<br>
+
+<b>FreeBSD on a Laptop</b>
+<a href="https://www.c0ffee.net/blog/freebsd-on-a-laptop/">Original</b>
