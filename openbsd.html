@@ -1,0 +1,64 @@
+I decided to install (VirtualBox) OpenBSD and follow the instructions presented during installation.
+
+==========================================================================================
+
+Once system is installed, you should check your mail.
+System also warns you of new mail once you log in.
+Type 'mail' command.
+One of the mails is a short introduction to the system itself which also tells you where to look next.
+You can use "mail $NUMBER" to read any of the mails.
+The command itself has many options - and I still don't know how to use all of it.
+You can use 'x' to save the mail you're currently reading.
+It is saved to /var/mail/$USER, defined in /etc/skel/.cshrc.
+Command 'mail' also sends old mail to mbox file, located in /home/$USER/mbox.
+
+In that mail, a few useful bits:
+- use 'man afterboot'
+- man man, man -k
+- preconfigured packages (binaries) are available from mirrors
+- mirror list is openbsd.org/ftp.html (saved to /etc/installurl)
+- packages are installed with pkg_add
+- all system conf is in /etc
+
+There was a lot of useful info in man page for afterboot, including help program,
+and I will go through it one by one.
+
+==========================================================================================
+
+/etc/installurl
+
+To start from scratch, I checked list of mirrors.
+My system didn't have /etc/installurl, so I ran man -k installurl.
+I received installurl(5) man page as a result, and went ahead to check it.
+It's a short man page, stating that /etc/installurl contains a single line, 
+specifiyng mirror server URL. It is created by installer script during installation
+and upgrades over HTTP.
+I also couldn't run syspatch -- it reported invalid URL in /etc/installurl.
+Since it wasn't on the expected location, I ran grep -R on /etc looking for installurl.
+It returned the file /etc/changelist.
+/etc/changelist turned out to be a list of files checked by security script, not relevant
+the reason /etc/installurl was missing.
+I went to check on the internet, and found out /etc/installurl is creating when doing netinstall ONLY.
+I installed from disk/cdrom, so all the required files were there already, no need to fetch from mirror.
+There was no mirror for Croatia, so I went with Cloudflare CDN instead.
+To test, I ran pkg_add -v vim, and it worked.
+
+Even though it is logical, perhaps it should be written in introduction in which cases /etc/installurl won't be 
+generated, and that it should be done manually if that is the case.
+
+==========================================================================================
+
+Getting a HR keyboard
+
+Can't type pipes like this... :)
+
+On installation, I chose DE layout, written to /etc/kbdtype.
+
+kbd -l didn't show HR layout, so I went to check what are my other options.
+
+Apparently, HR is not supported, or it may be if kernel is patched and recompiled:
+http://daemonforums.org/showpost.php?p=30631&postcount=2
+
+Additionally, stuff like this should be supported via X display.
+
+==========================================================================================
